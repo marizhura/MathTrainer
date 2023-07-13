@@ -237,16 +237,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzA-VX-Jqf">
-                                <rect key="frame" x="50" y="50" width="62" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rzA-VX-Jqf">
+                                <rect key="frame" x="50" y="50" width="89" height="41"/>
+                                <color key="tintColor" systemColor="systemYellowColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Back"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Back">
+                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="20"/>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" systemColor="systemYellowColor"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="aGn-ZR-Jzx" kind="unwind" unwindAction="unwindActionWithUnwindSegue:" id="Kkx-AU-biG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ve6-LE-btX">
-                                <rect key="frame" x="142" y="367" width="109" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 + 10 =" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ve6-LE-btX">
+                                <rect key="frame" x="107.00000000000001" y="367" width="179.33333333333337" height="48"/>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -261,7 +266,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="236">
-                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="25"/>
+                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="27"/>
                                 </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -281,8 +286,8 @@
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="56">
-                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="25"/>
+                                <buttonConfiguration key="configuration" style="plain" title="20">
+                                    <fontDescription key="titleFontDescription" type="system" weight="black" pointSize="27"/>
                                 </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -308,11 +313,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sE2-EO-bUy"/>
+                    <connections>
+                        <outletCollection property="secondButtonsCollection" destination="hCB-dv-csq" collectionClass="NSMutableArray" id="ANl-IV-Tbd"/>
+                        <outletCollection property="secondButtonsCollection" destination="Vxe-pb-uyf" collectionClass="NSMutableArray" id="MqS-iV-OUm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Am1-5L-qls" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="aGn-ZR-Jzx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="808" y="-2"/>
+            <point key="canvasLocation" x="806.87022900763361" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>
