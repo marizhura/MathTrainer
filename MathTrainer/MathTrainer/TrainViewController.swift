@@ -13,6 +13,7 @@ final class TrainViewController: UIViewController {
     @IBOutlet var questionLabel: UILabel!
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var rightButton: UIButton!
+    @IBOutlet var scoreLabel: UILabel!
     
     // MARK: - Properties
     var type: MathTypes = .add {
@@ -52,11 +53,18 @@ final class TrainViewController: UIViewController {
         }
     }
     
+    private var isAnsweredCorrectly = false
+    
+    var currentScore: Int = 0
+    
+    var scoreUpdated: ((MathTypes, Int) -> Void)?
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureQuestion()
         configureButtons()
+        updateScoreLabel()
     }
     
     // MARK: - IBActions
@@ -69,7 +77,6 @@ final class TrainViewController: UIViewController {
         check(answer: sender.titleLabel?.text ?? "",
               for: sender)
     }
-    
     
     // MARK: - Methods
     private func configureButtons() {
@@ -89,9 +96,9 @@ final class TrainViewController: UIViewController {
         let isRightButton = Bool.random()
         var randomAnswer: Int
         repeat {
-            randomAnswer = Int.random(in: (answer - 10)...(answer + 10))
+            randomAnswer = Int.random(in: (answer - 1)...(answer + 1))
         } while randomAnswer == answer
-                    
+        
         rightButton.setTitle(isRightButton ? String(answer) :
                                 String(randomAnswer), for: .normal)
         leftButton.setTitle(isRightButton ? String(randomAnswer) :
@@ -100,26 +107,66 @@ final class TrainViewController: UIViewController {
     
     private func configureQuestion() {
         firstNumber = Int.random(in: 1...99)
-        secondNumber = Int.random(in: 1...99)
+        secondNumber = Int.random(in: 2...99)
+        
+        switch type {
+        case .add, .subtract, .multiply:
+            break
+        case .divide:
+            var validDivisors: [Int] = []
+            for divisor in 2...secondNumber {
+                if firstNumber % divisor == 0 {
+                    validDivisors.append(divisor)
+                }
+            }
+            if let randomDivisor = validDivisors.randomElement() {
+                secondNumber = randomDivisor
+            } else {
+                repeat {
+                    secondNumber = Int.random(in: 2...99)
+                } while firstNumber % secondNumber != 0
+            }
+        }
         
         let question: String = "\(firstNumber) \(sign) \(secondNumber) ="
         questionLabel.text = question
     }
     
     private func check(answer: String, for button: UIButton) {
-        let isRightAnswer = Int(answer) == self.answer
-        
-        button.backgroundColor = isRightAnswer ? .green : .red
-        
-        if isRightAnswer {
-            let isSecondAttempt = rightButton.backgroundColor == .red || leftButton.backgroundColor == .red
-            
-            count += isSecondAttempt ? 0 : 1
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.configureQuestion()
-                self?.configureButtons()
-            }
+        guard let userAnswer = Int(answer) else {
+            return
         }
+        
+        let isRightAnswer = userAnswer == self.answer
+        
+        button.backgroundColor = isRightAnswer ? .systemGreen : .systemRed
+        
+        if isRightAnswer && !isAnsweredCorrectly {
+            currentScore += 1
+            scoreUpdated?(type, currentScore)
+            updateScoreLabel()
+            isAnsweredCorrectly = true
+            
+            switch type {
+            case .add:
+                UserDefaults.standard.set(currentScore, forKey: "addScore")
+            case .subtract:
+                UserDefaults.standard.set(currentScore, forKey: "subtractScore")
+            case .multiply:
+                UserDefaults.standard.set(currentScore, forKey: "multiplyScore")
+            case .divide:
+                UserDefaults.standard.set(currentScore, forKey: "divideScore")
+            }
+            UserDefaults.standard.synchronize()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.configureQuestion()
+            self?.configureButtons()
+            self?.isAnsweredCorrectly = false
+        }
+    }
+    private func updateScoreLabel() {
+        scoreLabel.text = "Score: \(currentScore)"
     }
 }
