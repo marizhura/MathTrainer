@@ -40,7 +40,7 @@ class ViewController: UIViewController {
             viewController.type = selectedType
         }
     }
-    
+
     private func configureButtons() {
         // Add shadow
         buttonsCollection.forEach { button in
@@ -50,7 +50,5 @@ class ViewController: UIViewController {
             button.layer.shadowRadius = 3
         }
     }
-
-
 }
 
